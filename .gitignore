@@ -4,3 +4,5 @@ __pycache__*
 .cache*
 test.txt
 ideas.txt
+.vscode
+venv/

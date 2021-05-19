@@ -1,6 +1,6 @@
 import os
 
-import reddit
+from . import reddit
 
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
