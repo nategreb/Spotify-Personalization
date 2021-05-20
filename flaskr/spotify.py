@@ -7,7 +7,7 @@ from .spotify_reddit.recommendations import get_recommended_tracks
 
 bp = Blueprint('recommend', __name__, url_prefix='')
 
-@bp.route('recommend', methods=('POST', 'GET'))
+@bp.route('recommend', methods=('POST'))
 def recommend():
     if request.method == 'POST':
         artist = request.form['artist']
@@ -23,6 +23,6 @@ def recommend():
             error = 'song is required'    
         
         if error is None:            
-            ids = get_recommended_tracks([artist],[genre],[song])
-            return render_template('test.html', list=ids)
-    return render_template('recommend.html')    
+            songs = get_recommended_tracks([artist],[genre],[song])
+            return render_template('RecommendPlaylist.html', query=f'{song} by {artist}',list=songs)
+    return render_template('Recommend.html')    

@@ -1,0 +1,25 @@
+<h1>{{query}}</h1>
+
+<div id="generatedPlaylist">
+    <form>
+        <h3>Playlist Title</h3>
+        <input type="text" value="{{query}} Playlist"> 
+
+        <h3> Songs </h3>
+        {%if list%}
+            {% for song in list %}
+                <p>{{song[0]}}: {{song[1]}}</p>
+            {% endfor %}
+        {% else %}
+            <p>Invalid Inputs</p>
+        {% endif %}
+
+        <h3>Please Select Playlist Type:</h3>
+        <input type="radio" id="public" name="playlistType">
+        <label for="public" >Public</label>
+        <input type="radio" id="private" name="playlistType">
+        <label for="private" >Private</label>
+
+        <input type="submit" value="Save on Spotify"> 
+    </form>
+</div>

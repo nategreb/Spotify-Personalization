@@ -5,4 +5,4 @@ __pycache__*
 test.txt
 ideas.txt
 .vscode
-venv/
+env/

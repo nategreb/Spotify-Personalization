@@ -5,6 +5,7 @@ from .spotify_playlists import PrivatePlaylist, client
 #up to 5 seeds for artists, genres, tracks can be provided
 #at least one of each is required
 #@param: artists, genres, tracks: String[]
+#returns [[String, String]]
 def get_recommended_tracks(artists, genres, tracks):
     if not artists or not genres or not tracks:
         print("at least one of artists, genres, and tracks are required")
@@ -12,10 +13,10 @@ def get_recommended_tracks(artists, genres, tracks):
         artists = seed_artists(artists)
         tracks = seed_tracks(tracks)
         if artists and tracks and genres:
-            ids = []
+            songs = []
             for track in client.recommendations(seed_artists=artists, seed_genres=genres, seed_tracks=tracks)['tracks']:
-                ids.append(track['id'])
-            return ids
+                songs.append([f"{track['name']} by {track['artists'][0]['name']}", track['id']])
+            return songs
         else: 
             print("No ids were found for artists and/or tracks")
     return None 
