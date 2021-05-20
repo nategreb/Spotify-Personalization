@@ -7,7 +7,7 @@ from .spotify_reddit.recommendations import get_recommended_tracks
 
 bp = Blueprint('recommend', __name__, url_prefix='')
 
-@bp.route('recommend', methods=('POST'))
+@bp.route('recommend', methods=('POST', 'GET'))
 def recommend():
     if request.method == 'POST':
         artist = request.form['artist']
