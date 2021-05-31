@@ -3,7 +3,7 @@
 <div id="generatedPlaylist">
     <form method="post">
         <h3>Playlist Title</h3>
-        <input type="text" value="{{query}} Playlist" required> 
+        <input type="text" name="title" value="{{query}} Playlist" required> 
 
         <h3> Songs </h3>
         {%if list%}
@@ -15,11 +15,19 @@
         {% endif %}
 
         <h3>Please Select Playlist Type:</h3>
-        <input type="radio" id="public" name="playlistType" required>
+        <input type="radio" id="public" name="playlistType" value="true" required>
         <label for="public" >Public</label>
-        <input type="radio" id="private" name="playlistType">
+        <input type="radio" id="private" name="playlistType" value="false">
         <label for="private">Private</label>
 
-        <input type="submit" value="Save on Spotify"> 
+        {% if authorized %}
+            <input type="submit" value="Save on Spotify"> 
+        {% else %}
+            <input type="submit" value="Login"> 
+        {% endif %}
     </form>
 </div>
+
+{% if error %}
+    <p>Must authorize app to save playlist.</p>
+{% endif %}
