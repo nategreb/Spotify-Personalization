@@ -28,6 +28,6 @@
     </form>
 </div>
 
-{% if error %}
+{% if not authorized %}
     <p>Must authorize app to save playlist.</p>
 {% endif %}

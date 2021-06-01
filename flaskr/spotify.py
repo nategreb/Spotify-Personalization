@@ -1,7 +1,7 @@
 from flask import (
     Flask, render_template, request, Blueprint, redirect, url_for, session
 )
-import os, requests, secrets, json, string
+import os, requests, secrets, string
 from datetime import datetime, timedelta
 
 import pkce
@@ -9,7 +9,6 @@ import spotipy
 import spotipy.util as util
 
 from .spotify_reddit.recommendations import get_recommended_tracks
-
 
 
 bp = Blueprint('spotify', __name__, url_prefix='/spotify')
@@ -50,14 +49,9 @@ def playlist_generator():
             create_playlist(request.form['title'], isPublic)
         else:
             return redirect(url_for('spotify.authorize'))
-    if request.args.get('state') is not None and request.args.get('code') is not None:
+    if 'state' in request.args and 'code' in request.args:
         get_token() 
         authorized = True       
-    elif request.args.get('error') is not None: #there is an error in the url. User didn't authenticate. 
-        error = True
-    else: #there is a valid token. SHOULD GO ABOVE UNDER POST
-        #get_user_id()
-        pass
     return render_template('RecommendPlaylist.html', query=session.get('query'),list=session.get('songs'), error=error, authorized=authorized)
 
 
@@ -76,14 +70,21 @@ def authorize():
         f"code_challenge_method=S256&" \
         f"code_challenge={code_challenge}&" \
         f"state={session['state']}&" \
-        f"scope=playlist-modify-private user-read-private user-read-email"
+        f"scope=playlist-modify-private playlist-modify-public user-read-private user-read-email"
     )
+
+
+#if user doesn't authorize this app or log in, then page will handle the 404 status code with message to client
+@bp.app_errorhandler(404)
+def app_not_authorized(error):
+    return render_template('RecommendPlaylist.html', query=session.get('query'),list=session.get('songs'), authorized=False)
 
 
 #after client authorizes the app, gets the token
 #also, calls get_user_id() since we now have the token
 def get_token(): 
-    if request.args.get('state') == session['state'] and not request.args.get('error'): 
+    #if request.args.get('state') == session['state'] and not request.args.get('error'): 
+    if not check_token():
         r = requests.post(
             'https://accounts.spotify.com/api/token', 
             data = {
@@ -133,7 +134,6 @@ def check_token():
             return True
     else:
         return False
-
 
 
 #create playlist given user token without using Spotipy 
