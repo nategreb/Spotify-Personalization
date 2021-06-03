@@ -18,21 +18,18 @@ bp = Blueprint('spotify', __name__, url_prefix='/spotify')
 def recommend():
     if request.method == 'POST':
         artist = request.form['artist']
-        genre = request.form['genre']
         song = request.form['song']
         error = None
 
         if not artist:
-            error = 'artist is required'
-        elif not genre:
-            error = 'genre is required'    
+            error = 'artist is required' 
         elif not song:
             error = 'song is required'    
         
         if error is None:            
             #session.clear()         
             #session['token'] = None                          
-            session['songs'] = get_recommended_tracks([artist],[genre],[song])
+            session['songs'] = get_recommended_tracks([artist],[song])
             session['query'] = f'{song} by {artist}'
             if session['songs'] is not None:                
                 return redirect(url_for('spotify.playlist_generator'))
