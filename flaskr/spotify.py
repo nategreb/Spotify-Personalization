@@ -38,7 +38,6 @@ def recommend():
 
 @bp.route('/playlist', methods=('POST', 'GET'))
 def playlist_generator():
-    error = False
     authorized = check_token()
     if request.method == 'POST':        
         if authorized:
@@ -49,7 +48,7 @@ def playlist_generator():
     if 'state' in request.args and 'code' in request.args:
         get_token() 
         authorized = True       
-    return render_template('RecommendPlaylist.html', query=session.get('query'),list=session.get('songs'), error=error, authorized=authorized)
+    return render_template('RecommendPlaylist.html', query=session.get('query'),list=session.get('songs'), authorized=authorized)
 
 
 #redirects to Spotify OAuth Page 

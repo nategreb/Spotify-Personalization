@@ -2,8 +2,7 @@ from .spotify_playlists import PrivatePlaylist, client
 
 
 #a list of recommended track ids based on artists 
-#up to 5 seeds for artists, genres, tracks can be provided
-#at least one of each is required
+#at least one and up to 5 seeds for artists, tracks can be provided
 #@param: artists, tracks: String[]
 #returns [[String, String]]
 def get_recommended_tracks(artists, tracks, **kwargs):
@@ -15,12 +14,15 @@ def get_recommended_tracks(artists, tracks, **kwargs):
         tracks = seed_tracks(tracks)
         if artists and tracks and len(genres) > 0:
             limit = 20
-            if len(kwargs) > 0 and 'limit' in kwargs:
+            if len(kwargs) > 0 and 'limit' in kwargs:                
                 limit = kwargs['limit']
             songs = []
-            for track in client.recommendations(seed_artists=artists, seed_genres=genres, seed_tracks=tracks, limit=limit)['tracks']:
-                songs.append([f"{track['name']} by {track['artists'][0]['name']}", track['id']])
-            return songs
+            if limit >= 0 and limit <= 100:
+                for track in client.recommendations(seed_artists=artists, seed_genres=genres, seed_tracks=tracks, limit=limit)['tracks']:
+                    songs.append([f"{track['name']} by {track['artists'][0]['name']}", track['id']])
+                return songs
+            else: 
+                print("Limit size must be between 0 and 100, inclusive")
         else: 
             print("No ids were found for artists and/or tracks")
     return None 
@@ -61,7 +63,7 @@ def get_id(query, kind):
 
 
 #get the genre of the query based on list of artists and the Spotify type 
-#(query: String, kind: String)
+#(artists: String[], kind: String)
 #returns empty array or up to 5 genres
 def seed_genres(artists, kind):    
     genres = []

@@ -8,11 +8,19 @@
         <h3> Songs </h3>
         {%if list%}
             {% for song in list %}
-                <p>{{song[0]}}: {{song[1]}}</p>
+                <p>{{song[0]}}</p>
             {% endfor %}
         {% else %}
             <p>No Songs Available Right Now</p>
         {% endif %}
+
+        {% comment %} <h3>Number of Songs:</h3>
+        <input type="checkbox" id="songs1" name="vehicle1" value="20">
+        <label for="vehicle1"> I have a bike</label><br>
+        <input type="checkbox" id="songs2" name="vehicle2" value="40">
+        <label for="vehicle2"> I have a car</label><br>
+        <input type="checkbox" id="songs3" name="vehicle3" value="80">
+        <label for="vehicle3"> I have a boat</label><br> {% endcomment %}
 
         <h3>Please Select Playlist Type:</h3>
         <input type="radio" id="public" name="playlistType" value="true" required>
