@@ -6,3 +6,4 @@ test.txt
 ideas.txt
 .vscode
 env/
+tests/pytest.ini
