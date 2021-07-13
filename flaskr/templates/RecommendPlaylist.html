@@ -1,41 +1,48 @@
-<h1>{{query}}</h1>
+{% extends "navbar.html" %}
+{% block content %}
+    {{super()}}
+    
+    <h1>{{query}}</h1>
 
-<div id="generatedPlaylist">
-    <form method="post">
-        <h3>Playlist Title</h3>
-        <input type="text" name="title" value="{{query}} Playlist" required> 
+    <div id="generatedPlaylist">
+        <form method="post">
+            <h3>Playlist Title</h3>
+            <input type="text" name="title" value="{{query}} Playlist" required> 
 
-        <h3> Songs </h3>
-        {%if list%}
-            {% for song in list %}
-                <p>{{song[0]}}</p>
-            {% endfor %}
-        {% else %}
-            <p>No Songs Available Right Now</p>
-        {% endif %}
+            <h3> Songs </h3>
+            <ul class="list-group">
+                {%if list%}
+                    {% for song in list %}
+                        <li class="list-group-item">{{song[0]}}</li>
+                    {% endfor %}
+                {% else %}
+                    <p>No Songs Available Right Now</p>
+                {% endif %}
+            </ul>
 
-        {% comment %} <h3>Number of Songs:</h3>
-        <input type="checkbox" id="songs1" name="vehicle1" value="20">
-        <label for="vehicle1"> I have a bike</label><br>
-        <input type="checkbox" id="songs2" name="vehicle2" value="40">
-        <label for="vehicle2"> I have a car</label><br>
-        <input type="checkbox" id="songs3" name="vehicle3" value="80">
-        <label for="vehicle3"> I have a boat</label><br> {% endcomment %}
+            {#  <h3>Number of Songs:</h3>
+            <input type="checkbox" id="songs1" name="vehicle1" value="20">
+            <label for="vehicle1"> I have a bike</label><br>
+            <input type="checkbox" id="songs2" name="vehicle2" value="40">
+            <label for="vehicle2"> I have a car</label><br>
+            <input type="checkbox" id="songs3" name="vehicle3" value="80">
+            <label for="vehicle3"> I have a boat</label><br>  #}
 
-        <h3>Please Select Playlist Type:</h3>
-        <input type="radio" id="public" name="playlistType" value="true" required>
-        <label for="public" >Public</label>
-        <input type="radio" id="private" name="playlistType" value="false">
-        <label for="private">Private</label>
+            <h3>Please Select Playlist Type:</h3>
+            <input type="radio" id="public" name="playlistType" value="true" required>
+            <label for="public" >Public</label>
+            <input type="radio" id="private" name="playlistType" value="false">
+            <label for="private">Private</label>
 
-        {% if authorized %}
-            <input type="submit" value="Save on Spotify"> 
-        {% else %}
-            <input type="submit" value="Login"> 
-        {% endif %}
-    </form>
-</div>
+            {% if authorized %}
+                <input type="submit" value="Save on Spotify"> 
+            {% else %}
+                <input type="submit" value="Login"> 
+            {% endif %}
+        </form>
+    </div>
 
-{% if not authorized %}
-    <p>Must authorize app to save playlist.</p>
-{% endif %}
+    {% if not authorized %}
+        <p>Must authorize app to save playlist.</p>
+    {% endif %}
+{% endblock %}

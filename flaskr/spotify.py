@@ -43,6 +43,7 @@ def playlist_generator():
         if authorized:
             isPublic = True if request.form['playlistType'] == 'true' else False
             create_playlist(request.form['title'], isPublic)
+            return redirect(url_for('spotify.recommend'))
         else:
             return redirect(url_for('spotify.authorize'))
     if 'state' in request.args and 'code' in request.args:

@@ -1,9 +1,13 @@
-<form method="post">
-    <label for="artist1">Artist:</label><br>
-    <input type="text" name="artist" id="artist1" required><br>
-    <label for="genre1">Genre:</label><br>
-    <input type="text" name="genre" id="genre1" required><br>
-    <label for="song1">Song:</label><br>
-    <input type="text" name="song" id="song1" required><br>
-    <input type="submit" value="Submit">
-</form>
+{% extends "navbar.html" %}
+{% block content %}
+    {{super()}}
+    <form method="post">
+        <label for="artist1">Artist:</label><br>
+        <input type="text" name="artist" id="artist1" required><br>
+        <label for="genre1">Genre:</label><br>
+        <input type="text" name="genre" id="genre1"><br>
+        <label for="song1">Song:</label><br>
+        <input type="text" name="song" id="song1" required><br>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

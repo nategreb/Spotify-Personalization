@@ -1,7 +1,11 @@
-<iframe src="https://open.spotify.com/embed/playlist/1BUTFzfznQyilTX5ZaXO6n" 
-        width="600" 
-        height="760" 
-        frameborder="0" 
-        allowtransparency="true" 
-        allow="encrypted-media">
-</iframe>
+{% extends "navbar.html" %}
+{% block content %}
+        {{super()}}
+        <iframe src="https://open.spotify.com/embed/playlist/1BUTFzfznQyilTX5ZaXO6n" 
+                width="600" 
+                height="760" 
+                frameborder="0" 
+                allowtransparency="true" 
+                allow="encrypted-media">
+        </iframe>
+{% endblock %}
